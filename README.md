@@ -1,57 +1,74 @@
-# Marvel Addon for Stremio (v1.0)
+# Marvel Addon for Stremio (v1.0.1)
 
-Addon de catalogues Marvel en français, **hébergé en fichiers statiques** via GitHub Pages : pas de serveur Deno, aucune clé API, aucune dépendance npm, aucun lien de streaming pirate.
+An unofficial, configurable **Marvel catalog addon for Stremio**, hosted as static files on GitHub Pages. No Deno server, API keys, npm dependencies, or video streams required.
 
-D'après les données du projet [joaogonp/addon-marvel](https://github.com/joaogonp/addon-marvel), avec attribution conservée dans `NOTICE-UPSTREAM.txt`. Il est indépendant du serveur du créateur, mais le **build hebdomadaire dépend de l'accessibilité du dépôt source**. Si le build échoue, la dernière version publiée reste disponible.
+The catalog data is based on [joaogonp/addon-marvel](https://github.com/joaogonp/addon-marvel). Attribution and license details are preserved in [NOTICE-UPSTREAM.txt](NOTICE-UPSTREAM.txt). This addon is independent of the original developer's server, but the **weekly rebuild depends on the upstream GitHub repository being accessible**. If a rebuild fails, the previously published site remains available.
 
-## Fonctionnalités
-- MCU dans l'ordre chronologique ; MCU par date de sortie ; X-Men ; films ; séries ; animations
-- Page de configuration en français : 6 interrupteurs, 63 combinaisons pré-générées
-- Catalogues de type `movie` / `series` avec identifiants IMDb, compatibles avec les autres addons Stremio
-- Pagination de 100 éléments (routes `skip=100`, etc.)
-- Guide MCU sur la page web reprenant le mélange films/séries dans l'ordre de la source
-- Mises à jour automatiques hebdomadaires via GitHub Actions
+## Features
 
-**Important :** Stremio distingue les catalogues de films et de séries ; la chronologie globale est présentée sur la page web, alors que dans Stremio elle est scindée en deux lignes, une par type. Les films/séries sont classés selon la source, sans garantie d'exhaustivité ni de fraîcheur. Cet addon ne fournit ni vidéos, ni flux, ni sous-titres.
+- MCU in chronological story order
+- MCU in release order
+- X-Men timeline
+- Marvel movies, TV shows, and animation
+- Interactive English configuration page: 6 toggles and 63 pre-generated combinations
+- Stremio `movie` and `series` catalogs using IMDb identifiers, designed to work alongside your other Stremio addons
+- Pagination (100 titles per page; `skip=100` and other routes)
+- A web-based MCU watch-order guide showing movies and TV shows together
+- Automatic weekly updates through GitHub Actions
 
-## Développer sur Windows
+**Note:** Stremio handles movies and TV shows as separate catalog types. The website displays the combined MCU timeline; Stremio presents separate movie and TV show rows. Ordering depends on the upstream data and may be incomplete or outdated. This addon does **not** provide streams, video files, subtitles, or links to watch copyrighted material.
 
-1. Installer [Node.js 22 LTS ou une version plus récente](https://nodejs.org/).
-2. Ouvrir PowerShell dans ce dossier.
-3. Exécuter `npm run build` pour charger les catalogues complets depuis GitHub.
-4. Exécuter `npm run preview`, puis ouvrir `http://localhost:4173/`.
-5. Exécuter `npm test` pour les contrôles automatiques (pas besoin d'Internet).
+## Install in Stremio
 
-On peut aussi exécuter `npm run build:demo` **sans Internet**, mais ce mode ne contient qu'un petit jeu de données. Ne pas le publier comme catalogue complet.
+1. Open **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/**.
+2. Enable the collections you want.
+3. Select **Install in Stremio**, or copy the generated manifest URL.
+4. If needed, open **Stremio → Addons** and paste the URL into the addon installation field.
 
-**PowerShell :**
+All six collections: **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/manifest.json**
+
+Each other combination gets its own manifest at `p/<selection>/manifest.json`. If you change your selection after installing, install the newly generated manifest as well.
+
+## Local development on Windows
+
+1. Install [Node.js 22 LTS or later](https://nodejs.org/).
+2. Open PowerShell in the project folder.
+3. Run `npm run build` to fetch and generate the full catalogs from GitHub.
+4. Run `npm run preview`, then open **http://localhost:4173/**.
+5. Run `npm test` to execute the automated checks (no Internet required for tests).
+
 ```powershell
 npm run build
 npm run preview
 ```
 
-## Publier gratuitement sur GitHub Pages
+For offline local testing only, run `npm run build:demo`. **This creates a small sample catalog; do not deploy it as the full addon.**
 
-1. Créer un dépôt GitHub public nommé par exemple `Marvel-Addon-for-Stremio`.
-2. Y envoyer **tout ce dossier** à la racine (y compris `.github/workflows/pages.yml`).
-3. Vérifier que la branche principale s'appelle `main`.
-4. Dans **Settings > Pages > Build and deployment**, sélectionner **GitHub Actions**.
-5. Dans l'onglet **Actions**, exécuter **Déployer Marvel Addon for Stremio** (ou provoquer un push sur `main`).
-6. Accéder à `https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/`.
-7. Sélectionner les catalogues sur la page et copier le lien `https://.../manifest.json` vers **Stremio > Addons > Ajouter un addon via URL**. Ou essayer le bouton d'installation directe.
+## Deploy with GitHub Pages
 
-La branche `main` peut être protégée, mais GitHub Pages doit être autorisé dans le dépôt. GitHub Pages d'un dépôt privé dépend des règles d'abonnement GitHub ; le dépôt public est le plus simple.
+This repository includes a GitHub Actions workflow to publish the generated files.
 
-## Structure
+1. Keep the repository public, with its default branch named `main`.
+2. Go to **Settings → Pages → Build and deployment → Source**, then choose **GitHub Actions**.
+3. Open the **Actions** tab and run **Deploy Marvel Addon for Stremio**, or push a commit to `main`.
+4. Check the deployment job for success and open **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/**.
 
-- `scripts/build.mjs` : lit les listes originales et génère les catalogues statiques
-- `site/index.html` : configuration et guide chronologique
-- `.github/workflows/pages.yml` : publication GitHub Pages
-- `fixtures/catalogs.json` : données miniatures destinées aux tests/démos
-- `dist/` : dossier généré (non versionné)
+The workflow runs on every push to `main` and once a week. GitHub Pages must be enabled for this repository.
 
-## Limites
+## Project structure
 
-La source reste éditée par son auteur, et le générateur n'utilise pas TMDB pour compléter les éléments. Le titre, le poster, l'année et l'identifiant IMDb proviennent des données d'origine. Certaines affiches peuvent expirer. Les données sources sont publiées avec la licence dans `NOTICE-UPSTREAM.txt` ; aucune clé API n'est extraite ou incluse.
+- `scripts/build.mjs` — fetches upstream data and generates static Stremio catalogs
+- `scripts/build.test.mjs` — automated tests
+- `scripts/serve.mjs` — local preview server
+- `site/index.html` — English configuration interface and MCU timeline
+- `.github/workflows/pages.yml` — GitHub Pages CI/CD workflow
+- `fixtures/catalogs.json` — sample data for local tests
+- `dist/` — generated output, not committed to Git
 
-Un serveur local fonctionne pour le développement sur le PC, mais n'est pas l'URL d'installation destinée aux autres appareils. Utiliser l'URL GitHub Pages en HTTPS.
+## Limitations and acknowledgments
+
+The upstream project owns and maintains the source listings. This builder does not use TMDb or OMDb to fill gaps. Movie and TV show names, posters, release years, and IMDb IDs come from the upstream data. Poster links may stop working, and some entries may be missing. No third-party API keys are included, extracted, or reused.
+
+Localhost preview URLs are for development only. Use the public HTTPS GitHub Pages URL to install the addon across devices.
+
+**Marvel, Disney, and Stremio are trademarks of their respective owners. This is an independent fan project and is not affiliated with or endorsed by them.**
