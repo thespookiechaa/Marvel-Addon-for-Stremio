@@ -13,9 +13,9 @@ http.createServer(async(req,res)=>{
     const url = new URL(req.url, `http://localhost:${port}`);
     const pathname = decodeURIComponent(url.pathname);
     const target = path.resolve(root, `.${pathname}`, pathname.endsWith('/')?'index.html':'');
-    if (target !== root && !target.startsWith(root + path.sep)) throw new Error('Accès interdit');
+    if (target !== root && !target.startsWith(root + path.sep)) throw new Error('Access denied');
     const bytes = await readFile(target);
     res.setHeader('Content-Type', mime[path.extname(target)] || 'application/octet-stream');
     res.writeHead(200);res.end(req.method==='HEAD'?undefined:bytes);
-  } catch {res.writeHead(404, {'Content-Type':'text/plain; charset=utf-8'});res.end('Introuvable');}
-}).listen(port, '127.0.0.1', ()=>console.log(`Prévisualisation : http://localhost:${port}`));
+  } catch {res.writeHead(404, {'Content-Type':'text/plain; charset=utf-8'});res.end('Not found');}
+}).listen(port, '127.0.0.1', ()=>console.log(`Local preview: http://localhost:${port}`));
