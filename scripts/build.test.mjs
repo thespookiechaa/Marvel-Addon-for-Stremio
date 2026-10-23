@@ -22,6 +22,10 @@ test('generates manifests and catalogs using demo data',async()=>{
   assert.equal(manifest.id,'com.marvel.catalogs.stremio.63');
   assert.deepEqual(manifest.resources,['catalog']);
   assert.deepEqual(manifest.types,['movie','series']);
+  assert.deepEqual(manifest.stremioAddonsConfig, {
+    issuer: 'https://stremio-addons.net',
+    signature: 'eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..5pis_cbSsd0D1iMxK4ya2Q.ZJlNofggFLlXtV0Owl3wVK-v0Fu3Z8RXhNufpGX4s1PHTCdj_-a6ftGCirc1s189Jrzs7rvLmZQJZw5D8-x538YlubHLwGenFiZSvc_4uPLlb6mRA9gTcQ9Oytra1s9v.X-YAeK2di_Ei8sLwOGPA_A'
+  });
   assert.ok(manifest.catalogs.every(c=>['movie','series'].includes(c.type)));
   assert.equal((await read('p/1/manifest.json')).catalogs.length,2);
   assert.equal((await read('p/4/manifest.json')).catalogs.length,1);
@@ -35,5 +39,8 @@ test('generates manifests and catalogs using demo data',async()=>{
   assert.equal((await read('catalog/movie/marvel-chronological-movie/skip=100.json')).metas.length,0);
   assert.equal((await read('timeline.json')).length,4);
   assert.equal((await read('stats.json')).demo,true);
-  for(let mask=1;mask<=63;mask++)assert.ok((await stat(path.join(root, 'dist', 'p', String(mask), 'manifest.json'))).isFile());
+  for(let mask=1;mask<=63;mask++){
+    assert.ok((await stat(path.join(root, 'dist', 'p', String(mask), 'manifest.json'))).isFile());
+    assert.deepEqual((await read(`p/${mask}/manifest.json`)).stremioAddonsConfig, manifest.stremioAddonsConfig);
+  }
 });
