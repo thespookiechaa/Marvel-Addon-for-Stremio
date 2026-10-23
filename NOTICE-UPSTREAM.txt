@@ -1,12 +1,12 @@
-Sources et attribution
+Sources and attribution
 ======================
 
-Données des catalogues dérivées à la compilation de :
+Catalog data is derived at build time from:
   joaogonp/addon-marvel
   https://github.com/joaogonp/addon-marvel
   Copyright (c) 2025 joaogonp
 
-Licence figurant dans le dépôt source au 23 octobre 2026 :
+License included in the source repository as of October 23, 2026:
 
 MIT License with API Key Restriction
 
@@ -39,5 +39,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Aucune clé OMDb/TMDb n'est incluse ni réutilisée dans Marvel Addon for Stremio.
-Cette implémentation ne reprend pas le serveur ni l'interface du dépôt source.
+No OMDb/TMDb API keys are included or reused by Marvel Addon for Stremio.
+This implementation does not reuse the original repository's server or interface.
