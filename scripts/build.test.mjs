@@ -6,17 +6,17 @@ import {fileURLToPath} from 'node:url';
 import {build, decodeUpstreamModule, toMeta, normalize} from './build.mjs';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = async p => JSON.parse(await readFile(path.join(root,'dist',p),'utf8'));
-test('décode les listes de la source sans exécuter le code',()=>{
+test('parses upstream catalogs without executing JavaScript',()=>{
   assert.deepEqual(decodeUpstreamModule('export default [{"title":"A"}];'),[{title:'A'}]);
   assert.throws(()=>decodeUpstreamModule('export default [process.exit(1)]'), SyntaxError);
   assert.throws(()=>decodeUpstreamModule('console.log("evil"); export default []'));
 });
-test('identifiants IMDb, affiches sûres, dédoublonnage',()=>{
-  assert.equal(toMeta({title:'Invalide',type:'movie',imdbId:'marvel_tt01'}),null);
+test('validates IMDb IDs, safe posters, and deduplication',()=>{
+  assert.equal(toMeta({title:'Invalid',type:'movie',imdbId:'marvel_tt01'}),null);
   assert.deepEqual(toMeta({title:'Test',type:'movie',imdbId:'tt1234567', poster:'javascript:alert(1)',releaseYear:'2026'}), {id:'tt1234567',type:'movie',name:'Test',releaseInfo:'2026'});
   assert.equal(normalize([{title:'Test',type:'movie',imdbId:'tt1234567'},{title:'Test',type:'movie',imdbId:'tt1234567'}]).length,1);
 });
-test('manifestes et catalogues réellement générés en mode démo',async()=>{
+test('generates manifests and catalogs using demo data',async()=>{
   await build({fixture:true});
   const manifest=await read('manifest.json');
   assert.equal(manifest.id,'com.marvel.catalogs.stremio.63');
