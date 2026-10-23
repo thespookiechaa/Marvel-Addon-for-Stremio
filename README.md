@@ -1,4 +1,4 @@
-# Marvel Addon for Stremio (v1.1.0)
+# Marvel Addon for Stremio (v1.2.0)
 
 An unofficial, configurable **Marvel catalog addon for Stremio**, hosted as static files on GitHub Pages. No Deno server, API keys, npm dependencies, or video streams required.
 
@@ -14,10 +14,22 @@ The catalog data is based on [joaogonp/addon-marvel](https://github.com/joaogonp
 - Stremio `movie` and `series` catalogs using IMDb identifiers, designed to work alongside your other Stremio addons
 - Pagination (100 titles per page; `skip=100` and other routes)
 - A web-based MCU watch-order guide showing movies and TV shows together
-- **Road to Doomsday:** a curated list of 15 movies and TV shows presented in one combined watch order on the website, a live countdown to the film's release (France: December 16, 2026; US: December 18, 2026), and an optional watched checklist saved locally in your browser
+- **Road to Doomsday:** a curated list of 16 titles (14 movies and 2 TV series: WandaVision and Loki) presented in one combined watch order on the website, a live countdown to the film's release (France: December 16, 2026; US: December 18, 2026), and an optional watched checklist saved locally in your browser
 - Automatic weekly updates through GitHub Actions
 
 **Note:** Stremio handles movies and TV shows as separate catalog types. The website displays the combined MCU timeline and Road to Doomsday watch guide, but Stremio presents separate movie and TV show rows. Ordering depends on the upstream data and may be incomplete or outdated. This addon does **not** provide streams, video files, subtitles, or links to watch copyrighted material.
+
+## What's new in v1.2.0
+
+**WandaVision (2021) is now included in Road to Doomsday** on both the website and the Stremio addon. It appears immediately after *Avengers: Endgame* and before *Loki* in the combined watch order.
+
+- **16 titles total:** 14 movies and 2 TV shows (*WandaVision* and *Loki*).
+- Updated website watchlist, progress counter, and Doom-themed event overview.
+- The **Road to Doomsday • TV Shows** catalog now includes both series, with the recommendation to watch *Loki* seasons 1 and 2.
+- Existing installation URLs and the other six Marvel collections are unchanged.
+- The visual countdown remains on the website.
+
+For detailed release notes, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Install in Stremio
 
@@ -66,13 +78,13 @@ The workflow runs on every push to `main` and once a week. GitHub Pages must be 
 - `scripts/build.test.mjs` — automated tests
 - `scripts/serve.mjs` — local preview server
 - `site/index.html` — English configuration interface, unified watch guide, countdown and MCU timeline
-- `data/road-to-doomsday.json` — curated 15-title Road to Doomsday order; movie/series entries and release dates
+- `data/road-to-doomsday.json` — curated 16-title Road to Doomsday order; movie/series entries and release dates
 - `dist/road.json` — generated web watchlist (movies and TV shows mixed)
 - `.github/workflows/pages.yml` — GitHub Pages CI/CD workflow
 - `fixtures/catalogs.json` — sample data for local tests
 - `dist/` — generated output, not committed to Git
 
-Road to Doomsday is a fan-edited viewing selection, not an official Marvel Studios timeline, based on a community suggestion and [this Konbini article](https://www.konbini.com/popculture/les-films-et-series-marvel-a-voir-ou-a-revoir-avant-de-decouvrir-avengers-doomsday/). For **Loki**, the guide recommends seasons 1 and 2, while Stremio exposes the TV show as one entry. The progress checklist only tracks the visitor's browser and does not sync with Stremio.
+Road to Doomsday is a fan-edited viewing selection, not an official Marvel Studios timeline, based on a community suggestion and [this Konbini article](https://www.konbini.com/popculture/les-films-et-series-marvel-a-voir-ou-a-revoir-avant-de-decouvrir-avengers-doomsday/). For **Loki**, the guide recommends seasons 1 and 2, while Stremio exposes the TV show as one entry. **WandaVision** is included as the other TV series in the Road to Doomsday lineup. The progress checklist only tracks the visitor's browser and does not sync with Stremio.
 
 ## Limitations and acknowledgments
 

@@ -90,7 +90,7 @@ export function selectCatalogs(normalized, mask) {
 export function manifestFor(catalogs, mask) {
   return {
     id: `com.marvel.catalogs.stremio.${mask}`,
-    version: '1.1.0',
+    version: '1.2.0',
     name: 'Marvel Addon for Stremio',
     description: 'Customizable Marvel catalogs and Road to Doomsday watch order. No video streams included.',
     resources: ['catalog'],
@@ -126,7 +126,7 @@ export async function build({ fixture = false } = {}) {
   const normalized = Object.fromEntries(SOURCES.map(s => [s.key, normalize(data[s.key] ?? [], cache)]));
   if (SOURCES.some(s => !normalized[s.key].length)) throw new Error('Catalog does not contain valid IMDb IDs.');
   const road = JSON.parse(await readFile(path.join(projectDir, 'data', 'road-to-doomsday.json'), 'utf8'));
-  if (!Array.isArray(road.items) || road.items.length !== 15) throw new Error('Expected exactly 15 Road to Doomsday titles.');
+  if (!Array.isArray(road.items) || road.items.length !== 16) throw new Error('Expected exactly 16 Road to Doomsday titles.');
   const upstream = new Map(Object.values(normalized).flat().map(meta => [meta.id, meta]));
   normalized.road = road.items.map((entry, position) => {
     const reference = upstream.get(entry.id);

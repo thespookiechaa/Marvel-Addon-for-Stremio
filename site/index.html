@@ -47,13 +47,13 @@
     @media(max-width:780px){.road-top{grid-template-columns:1fr}.road-list{grid-template-columns:1fr}.road-bottom{grid-template-columns:1fr}.road-guide-head{align-items:start}.road-feature{padding:19px}}
     @media(max-width:460px){.road-guide-head{flex-direction:column;gap:12px}.road-progress-wrap{width:100%;text-align:left}.road-clock{padding:12px}.clock-grid{gap:5px}.clock-grid>div{padding:13px 2px}.region-button{font-size:9px}}
   </style>
-  <link rel="stylesheet" href="./road-doom.css?v=1.1.1">
+  <link rel="stylesheet" href="./road-doom.css?v=1.2.0">
 </head>
 <body>
   <div class="shell">
     <header class="top"><div class="brand">MARVEL <strong>ADDON</strong> <span class="micro">/ STREMIO</span></div><a href="https://github.com/joaogonp/addon-marvel" target="_blank" rel="noopener noreferrer">Based on the original project ↗</a></header>
     <section class="hero">
-      <span class="pill">STREMIO ADDON • VERSION 1.1.0</span>
+      <span class="pill">STREMIO ADDON • VERSION 1.2.0</span>
       <h1>THE WHOLE<br><span>MULTIVERSE.</span></h1>
       <p class="intro">Explore Marvel movies, TV shows, and watch orders in Stremio. Pick your collections and install your own personalized addon.</p>
       <div class="stats"><span class="stat"><b>7</b> collections</span><span class="stat"><b>127</b> combinations</span><span class="stat"><b id="count">—</b> MCU titles</span></div>
@@ -64,8 +64,8 @@
           <div>
             <span class="micro doom-kicker"><span class="doom-led" aria-hidden="true"></span>THE COUNTDOWN HAS BEGUN</span>
             <h2 id="road-title"><span class="doom-pretitle">ROAD TO</span><span class="doom-wordmark">DOOMSDAY</span></h2>
-            <p>One essential watch order. Fifteen stories across Marvel movies and television, leading to <strong>Avengers: Doomsday</strong>.</p>
-            <div class="road-meta"><span>15 titles</span><span>Movies + Loki seasons 1 &amp; 2</span><span>Unified watch guide</span></div>
+            <p>One essential watch order. Sixteen stories across Marvel movies and television, leading to <strong>Avengers: Doomsday</strong>.</p>
+            <div class="road-meta"><span>16 titles</span><span>Movies + WandaVision + Loki S1–2</span><span>Unified watch guide</span></div>
           </div>
           <div class="road-clock" aria-label="Countdown to Avengers Doomsday">
             <div class="clock-head"><span class="micro">COUNTDOWN TO DOOMSDAY</span><div class="region-controls" role="group" aria-label="Release region">
@@ -78,7 +78,7 @@
         </div>
         <div class="road-guide-head">
           <div><h3>THE WATCH ORDER</h3><p>Follow the story. Mark each title as watched to track your progress on this device.</p></div>
-          <div class="road-progress-wrap"><strong id="road-progress-label">0 / 15 watched</strong><progress id="road-progress" max="15" value="0" aria-label="Watchlist progress"></progress></div>
+          <div class="road-progress-wrap"><strong id="road-progress-label">0 / 16 watched</strong><progress id="road-progress" max="16" value="0" aria-label="Watchlist progress"></progress></div>
         </div>
         <ol class="road-list" id="road-list"><li class="road-loading">Loading your Road to Doomsday…</li></ol>
         <div class="road-bottom">
@@ -97,7 +97,7 @@
             <label class="toggle"><span><strong>🎬 Marvel Movies</strong><small>Beyond the MCU</small></span><input type="checkbox" data-key="movies" checked aria-label="Enable Marvel Movies"></label>
             <label class="toggle"><span><strong>📺 Marvel TV Shows</strong><small>Live-action TV shows</small></span><input type="checkbox" data-key="series" checked aria-label="Enable Marvel TV Shows"></label>
             <label class="toggle"><span><strong>🕷️ Animation</strong><small>Animated movies and TV shows</small></span><input type="checkbox" data-key="animations" checked aria-label="Enable Animation"></label>
-            <label class="toggle road-toggle"><span><strong>◈ Road to Doomsday</strong><small>15 essential stories — two compatible Stremio catalog rows</small></span><input type="checkbox" data-key="road" aria-label="Enable Road to Doomsday"></label>
+            <label class="toggle road-toggle"><span><strong>◈ Road to Doomsday</strong><small>16 essential stories — two compatible Stremio catalog rows</small></span><input type="checkbox" data-key="road" aria-label="Enable Road to Doomsday"></label>
           </div>
           <div class="action"><a class="btn primary" id="install" href="#">↗ Install in Stremio</a><button class="btn" id="copy" type="button">⧉ Copy addon URL</button></div>
           <div class="urlbox" id="manifest" aria-live="polite"></div><p class="hint" id="toast" aria-live="polite"></p>
@@ -194,7 +194,7 @@
       }
       roadList.append(fragment);
       const count=roadItems.filter(item=>watched.has(item.id)).length;
-      roadProgress.max=roadItems.length||15;roadProgress.value=count;
+      roadProgress.max=roadItems.length||16;roadProgress.value=count;
       roadProgressLabel.textContent=count+' / '+roadItems.length+' watched';
     }
     fetch(new URL('road.json',base)).then(r=>{if(!r.ok)throw Error('Missing road catalog');return r.json()}).then(data=>{
