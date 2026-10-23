@@ -47,6 +47,7 @@
     @media(max-width:780px){.road-top{grid-template-columns:1fr}.road-list{grid-template-columns:1fr}.road-bottom{grid-template-columns:1fr}.road-guide-head{align-items:start}.road-feature{padding:19px}}
     @media(max-width:460px){.road-guide-head{flex-direction:column;gap:12px}.road-progress-wrap{width:100%;text-align:left}.road-clock{padding:12px}.clock-grid{gap:5px}.clock-grid>div{padding:13px 2px}.region-button{font-size:9px}}
   </style>
+  <link rel="stylesheet" href="./road-doom.css?v=1.1.1">
 </head>
 <body>
   <div class="shell">
@@ -58,13 +59,13 @@
       <div class="stats"><span class="stat"><b>7</b> collections</span><span class="stat"><b>127</b> combinations</span><span class="stat"><b id="count">—</b> MCU titles</span></div>
     </section>
     <main>
-      <section class="road-feature" id="road-to-doomsday" aria-labelledby="road-title">
+      <section class="road-feature doom-theme" id="road-to-doomsday" aria-labelledby="road-title">
         <div class="road-top">
           <div>
-            <span class="micro">SPECIAL WATCH GUIDE • NEW</span>
-            <h2 id="road-title">ROAD TO <span>DOOMSDAY.</span></h2>
-            <p>One curated journey through Marvel movies and TV shows. Watch the essentials before <strong>Avengers: Doomsday</strong> hits theaters.</p>
-            <div class="road-meta"><span>15 titles</span><span>Movies + Loki seasons 1 &amp; 2</span><span>One combined guide</span></div>
+            <span class="micro doom-kicker"><span class="doom-led" aria-hidden="true"></span>THE COUNTDOWN HAS BEGUN</span>
+            <h2 id="road-title"><span class="doom-pretitle">ROAD TO</span><span class="doom-wordmark">DOOMSDAY</span></h2>
+            <p>One essential watch order. Fifteen stories across Marvel movies and television, leading to <strong>Avengers: Doomsday</strong>.</p>
+            <div class="road-meta"><span>15 titles</span><span>Movies + Loki seasons 1 &amp; 2</span><span>Unified watch guide</span></div>
           </div>
           <div class="road-clock" aria-label="Countdown to Avengers Doomsday">
             <div class="clock-head"><span class="micro">COUNTDOWN TO DOOMSDAY</span><div class="region-controls" role="group" aria-label="Release region">
@@ -76,7 +77,7 @@
           </div>
         </div>
         <div class="road-guide-head">
-          <div><h3>Your Doomsday watchlist</h3><p>Movies and TV shows in the same watch order. Mark titles as watched to track your progress on this device.</p></div>
+          <div><h3>THE WATCH ORDER</h3><p>Follow the story. Mark each title as watched to track your progress on this device.</p></div>
           <div class="road-progress-wrap"><strong id="road-progress-label">0 / 15 watched</strong><progress id="road-progress" max="15" value="0" aria-label="Watchlist progress"></progress></div>
         </div>
         <ol class="road-list" id="road-list"><li class="road-loading">Loading your Road to Doomsday…</li></ol>
@@ -96,7 +97,7 @@
             <label class="toggle"><span><strong>🎬 Marvel Movies</strong><small>Beyond the MCU</small></span><input type="checkbox" data-key="movies" checked aria-label="Enable Marvel Movies"></label>
             <label class="toggle"><span><strong>📺 Marvel TV Shows</strong><small>Live-action TV shows</small></span><input type="checkbox" data-key="series" checked aria-label="Enable Marvel TV Shows"></label>
             <label class="toggle"><span><strong>🕷️ Animation</strong><small>Animated movies and TV shows</small></span><input type="checkbox" data-key="animations" checked aria-label="Enable Animation"></label>
-            <label class="toggle"><span><strong>🔥 Road to Doomsday</strong><small>15 key movies and TV shows — two compatible Stremio rows</small></span><input type="checkbox" data-key="road" aria-label="Enable Road to Doomsday"></label>
+            <label class="toggle road-toggle"><span><strong>◈ Road to Doomsday</strong><small>15 essential stories — two compatible Stremio catalog rows</small></span><input type="checkbox" data-key="road" aria-label="Enable Road to Doomsday"></label>
           </div>
           <div class="action"><a class="btn primary" id="install" href="#">↗ Install in Stremio</a><button class="btn" id="copy" type="button">⧉ Copy addon URL</button></div>
           <div class="urlbox" id="manifest" aria-live="polite"></div><p class="hint" id="toast" aria-live="polite"></p>
