@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#100f13">
-  <meta name="description" content="Marvel Addon for Stremio : compose tes catalogues MCU, X-Men, films et séries pour Stremio.">
+  <meta name="description" content="Marvel Addon for Stremio: customize your MCU, X-Men, movie, and TV catalogs for Stremio.">
   <title>Marvel Addon for Stremio — Stremio Addon</title>
   <style>
     :root {color-scheme:dark;--bg:#100f13;--panel:#1b191f;--panel2:#252229;--edge:#3a343f;--fg:#f5f2f0;--muted:#a7a0ab;--red:#e82b39;--gold:#ffce7a}
@@ -28,43 +28,43 @@
 </head>
 <body>
   <div class="shell">
-    <header class="top"><div class="brand">MARVEL <strong>ADDON</strong> <span class="micro">/ STREMIO</span></div><a href="https://github.com/joaogonp/addon-marvel" target="_blank" rel="noopener noreferrer">Inspiré du projet original ↗</a></header>
+    <header class="top"><div class="brand">MARVEL <strong>ADDON</strong> <span class="micro">/ STREMIO</span></div><a href="https://github.com/joaogonp/addon-marvel" target="_blank" rel="noopener noreferrer">Based on the original project ↗</a></header>
     <section class="hero">
-      <span class="pill">ADDON STREMIO • VERSION 1.0</span>
+      <span class="pill">STREMIO ADDON • VERSION 1.0.1</span>
       <h1>THE WHOLE<br><span>MULTIVERSE.</span></h1>
-      <p class="intro">Tes films, tes séries et les chronologies Marvel dans Stremio. Sélectionne tes univers, puis installe ton addon personnalisé.</p>
-      <div class="stats"><span class="stat"><b>6</b> univers</span><span class="stat"><b>63</b> configurations</span><span class="stat"><b id="count">—</b> références MCU</span></div>
+      <p class="intro">Explore Marvel movies, TV shows, and watch orders in Stremio. Pick your collections and install your own personalized addon.</p>
+      <div class="stats"><span class="stat"><b>6</b> collections</span><span class="stat"><b>63</b> combinations</span><span class="stat"><b id="count">—</b> MCU titles</span></div>
     </section>
     <main>
       <div class="split">
         <section class="panel" id="config">
-          <div class="micro">01 — PERSONNALISATION</div>
-          <h2>Crée ton catalogue</h2><p class="sub">Active uniquement les collections que tu veux voir dans Stremio.</p>
+          <div class="micro">01 — CUSTOMIZE</div>
+          <h2>Build your catalog</h2><p class="sub">Choose the collections you want to see in Stremio.</p>
           <div id="switches">
-            <label class="toggle"><span><strong>🕒 MCU — Chronologie</strong><small>Films et séries dans l'ordre de l'histoire</small></span><input type="checkbox" data-key="chronological" checked aria-label="Activer MCU Chronologie"></label>
-            <label class="toggle"><span><strong>📅 MCU — Ordre de sortie</strong><small>Du premier film aux sorties récentes</small></span><input type="checkbox" data-key="release" checked aria-label="Activer MCU Ordre de sortie"></label>
-            <label class="toggle"><span><strong>✕ X-Men</strong><small>La saga des mutants</small></span><input type="checkbox" data-key="xmen" checked aria-label="Activer X-Men"></label>
-            <label class="toggle"><span><strong>🎬 Films Marvel</strong><small>Au-delà du MCU</small></span><input type="checkbox" data-key="movies" checked aria-label="Activer Films Marvel"></label>
-            <label class="toggle"><span><strong>📺 Séries Marvel</strong><small>Les séries live-action</small></span><input type="checkbox" data-key="series" checked aria-label="Activer Séries Marvel"></label>
-            <label class="toggle"><span><strong>🕷️ Animations</strong><small>Séries et films animés</small></span><input type="checkbox" data-key="animations" checked aria-label="Activer Animations"></label>
+            <label class="toggle"><span><strong>🕒 MCU — Chronological Order</strong><small>Movies and TV shows in story order</small></span><input type="checkbox" data-key="chronological" checked aria-label="Enable MCU Chronological Order"></label>
+            <label class="toggle"><span><strong>📅 MCU — Release Order</strong><small>From the first movie to the latest releases</small></span><input type="checkbox" data-key="release" checked aria-label="Enable MCU Release Order"></label>
+            <label class="toggle"><span><strong>✕ X-Men</strong><small>The mutant saga</small></span><input type="checkbox" data-key="xmen" checked aria-label="Enable X-Men"></label>
+            <label class="toggle"><span><strong>🎬 Marvel Movies</strong><small>Beyond the MCU</small></span><input type="checkbox" data-key="movies" checked aria-label="Enable Marvel Movies"></label>
+            <label class="toggle"><span><strong>📺 Marvel TV Shows</strong><small>Live-action TV shows</small></span><input type="checkbox" data-key="series" checked aria-label="Enable Marvel TV Shows"></label>
+            <label class="toggle"><span><strong>🕷️ Animation</strong><small>Animated movies and TV shows</small></span><input type="checkbox" data-key="animations" checked aria-label="Enable Animation"></label>
           </div>
-          <div class="action"><a class="btn primary" id="install" href="#">↗ Installer dans Stremio</a><button class="btn" id="copy" type="button">⧉ Copier le lien de l'addon</button></div>
+          <div class="action"><a class="btn primary" id="install" href="#">↗ Install in Stremio</a><button class="btn" id="copy" type="button">⧉ Copy addon URL</button></div>
           <div class="urlbox" id="manifest" aria-live="polite"></div><p class="hint" id="toast" aria-live="polite"></p>
         </section>
         <aside class="panel">
-          <div class="micro">02 — GUIDE RAPIDE</div>
-          <h2>Prêt à explorer ?</h2><p class="sub">Installation en quelques clics.</p>
-          <ol class="steps"><li>Choisis tes catalogues dans le panneau de gauche.</li><li>Clique sur « Installer » ou copie le lien du manifeste.</li><li>Dans Stremio, ouvre <strong>Addons</strong>, puis colle le lien d'addon si nécessaire.</li><li>Retrouve les sections Marvel dans tes catalogues Stremio.</li></ol>
-          <div class="note">L'addon organise les œuvres, mais ne fournit aucun flux vidéo. La lecture dépend de tes autres addons et services.</div>
-          <p class="hint" id="dataState">Chargement des catalogues…</p>
+          <div class="micro">02 — QUICK START</div>
+          <h2>Ready to explore?</h2><p class="sub">Get started in just a few clicks.</p>
+          <ol class="steps"><li>Choose your catalogs in the panel on the left.</li><li>Click “Install in Stremio” or copy the manifest URL.</li><li>In Stremio, open <strong>Addons</strong> and paste the addon URL if needed.</li><li>Find your Marvel collections in the Stremio catalogs.</li></ol>
+          <div class="note">This addon organizes Marvel titles but does not provide video streams. Playback depends on your other addons and services.</div>
+          <p class="hint" id="dataState">Loading catalogs…</p>
         </aside>
       </div>
       <section class="section" id="timeline-section">
-        <div class="section-head"><div><div class="micro">03 — MCU</div><h2>La chronologie, en un coup d'œil.</h2><p>Films et séries mélangés selon la liste de référence.</p></div></div>
-        <div class="timeline" id="timeline"></div><button class="btn more" id="more" type="button" hidden>Voir toute la chronologie ↓</button>
+        <div class="section-head"><div><div class="micro">03 — MCU</div><h2>The MCU timeline at a glance.</h2><p>Movies and TV shows together in the source watch order.</p></div></div>
+        <div class="timeline" id="timeline"></div><button class="btn more" id="more" type="button" hidden>View full timeline ↓</button>
       </section>
     </main>
-    <footer class="footer"><span>Projet non officiel. Aucun partenariat avec Marvel, Disney ou Stremio.</span><span>Données : <a href="https://github.com/joaogonp/addon-marvel" rel="noopener noreferrer" target="_blank">joaogonp/addon-marvel</a> • Sources et licences dans le dépôt.</span></footer>
+    <footer class="footer"><span>Unofficial fan project. Not affiliated with Marvel, Disney, or Stremio.</span><span>Data: <a href="https://github.com/joaogonp/addon-marvel" rel="noopener noreferrer" target="_blank">joaogonp/addon-marvel</a> • Attribution and licenses in the repository.</span></footer>
   </div>
   <script>
   (()=>{
@@ -80,30 +80,30 @@
       const mask = checks.reduce((sum,c)=>sum + (c.checked ? (1 << keys.indexOf(c.dataset.key)) : 0), 0);
       const valid = mask > 0;
       manifestUrl = valid ? new URL(mask===63?'manifest.json':`p/${mask}/manifest.json`, base).href : '';
-      manifestBox.textContent = valid ? manifestUrl : 'Sélectionne au moins un catalogue.';
+      manifestBox.textContent = valid ? manifestUrl : 'Select at least one catalog.';
       copyButton.disabled = !valid;install.style.pointerEvents = valid?'auto':'none';install.setAttribute('aria-disabled',String(!valid));
       install.href = valid ? manifestUrl.replace(/^https?:\/\//,'stremio://') : '#';
-      toast.textContent = valid && window.location.protocol === 'http:' ? 'Pour installer sur d’autres appareils, publie d’abord sur une adresse HTTPS.' : '';
+      toast.textContent = valid && window.location.protocol === 'http:' ? 'To install on other devices, publish the addon at an HTTPS address first.' : '';
     }
     checks.forEach(c=>c.addEventListener('change',update));update();
     copyButton.addEventListener('click',async()=>{
       if(!manifestUrl)return;
-      try { await navigator.clipboard.writeText(manifestUrl);toast.textContent='Lien copié !'; }
-      catch {const temp=document.createElement('textarea');temp.value=manifestUrl;document.body.append(temp);temp.select();const ok=document.execCommand('copy');temp.remove();toast.textContent=ok?'Lien copié !':'Sélectionne le lien ci-dessus pour le copier.';}
+      try { await navigator.clipboard.writeText(manifestUrl);toast.textContent='Link copied!'; }
+      catch {const temp=document.createElement('textarea');temp.value=manifestUrl;document.body.append(temp);temp.select();const ok=document.execCommand('copy');temp.remove();toast.textContent=ok?'Link copied!':'Select the URL above to copy it.';}
     });
     let items=[];let expanded=false;
     const timeline=document.querySelector('#timeline');const more=document.querySelector('#more');
     function render(){timeline.replaceChildren();const size=expanded?items.length:Math.min(10,items.length);const frag=document.createDocumentFragment();
       for(let i=0;i<size;i++){const item=items[i], card=document.createElement('article');card.className='movie';
-        const poster=document.createElement('div');poster.className='poster';if(item.poster){const img=document.createElement('img');img.src=item.poster;img.alt='Affiche : '+item.name;img.loading='lazy';poster.append(img)}else poster.textContent='★';
-        const copy=document.createElement('div');copy.className='copy';const num=document.createElement('div');num.className='num';num.textContent='#'+String(i+1).padStart(2,'0');const title=document.createElement('div');title.className='title';title.textContent=item.name;const year=document.createElement('div');year.className='year';year.textContent=(item.type==='series'?'Série':'Film')+(item.releaseInfo?' • '+item.releaseInfo:'');copy.append(num,title,year);card.append(poster,copy);frag.append(card);
-      }timeline.append(frag);more.hidden=items.length<=10;more.textContent=expanded?'Réduire ↑':'Voir toute la chronologie ↓';}
+        const poster=document.createElement('div');poster.className='poster';if(item.poster){const img=document.createElement('img');img.src=item.poster;img.alt='Poster: '+item.name;img.loading='lazy';poster.append(img)}else poster.textContent='★';
+        const copy=document.createElement('div');copy.className='copy';const num=document.createElement('div');num.className='num';num.textContent='#'+String(i+1).padStart(2,'0');const title=document.createElement('div');title.className='title';title.textContent=item.name;const year=document.createElement('div');year.className='year';year.textContent=(item.type==='series'?'TV Show':'Movie')+(item.releaseInfo?' • '+item.releaseInfo:'');copy.append(num,title,year);card.append(poster,copy);frag.append(card);
+      }timeline.append(frag);more.hidden=items.length<=10;more.textContent=expanded?'Show less ↑':'View full timeline ↓';}
     more.addEventListener('click',()=>{expanded=!expanded;render()});
     Promise.all([fetch(new URL('stats.json',base)).then(x=>{if(!x.ok)throw Error();return x.json()}),fetch(new URL('timeline.json',base)).then(x=>{if(!x.ok)throw Error();return x.json()})]).then(([stats,list])=>{
       const count=stats.sources.find(s=>s.key==='chronological')?.count;document.querySelector('#count').textContent= count??'—';
-      document.querySelector('#dataState').textContent=stats.demo?'⚠ Catalogue de démonstration : échantillon réduit, ne pas publier.':'✓ Catalogue complet compilé depuis la source GitHub.';
+      document.querySelector('#dataState').textContent=stats.demo?'⚠ Demo catalog: limited sample data. Do not publish.':'✓ Full catalog built from the GitHub source.';
       items=list;render();
-    }).catch(()=>{document.querySelector('#dataState').textContent='Données indisponibles. Lance npm run build puis actualise.';});
+    }).catch(()=>{document.querySelector('#dataState').textContent='Catalog data unavailable. Run npm run build and refresh.';});
   })();
   </script>
 </body>
