@@ -1,9 +1,9 @@
 {
   "name": "Marvel-Addon-for-Stremio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
-  "description": "Addon Stremio Marvel statique, configurable et hébergeable sur GitHub Pages.",
+  "description": "Static configurable Marvel addon for Stremio, hosted on GitHub Pages.",
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:demo": "node scripts/build.mjs --fixture",
