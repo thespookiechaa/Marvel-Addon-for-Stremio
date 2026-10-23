@@ -3,12 +3,12 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 export const SOURCES = [
-  { key: 'chronological', file: 'chronologicalData.js', label: 'MCU • Chronologie' },
-  { key: 'release', file: 'releaseData.js', label: 'MCU • Ordre de sortie' },
-  { key: 'xmen', file: 'xmenData.js', label: 'X-Men • Chronologie' },
-  { key: 'movies', file: 'moviesData.js', label: 'Marvel • Tous les films' },
-  { key: 'series', file: 'seriesData.js', label: 'Marvel • Toutes les séries' },
-  { key: 'animations', file: 'animationsData.js', label: 'Marvel • Animations' }
+  { key: 'chronological', file: 'chronologicalData.js', label: 'MCU • Chronological Order' },
+  { key: 'release', file: 'releaseData.js', label: 'MCU • Release Order' },
+  { key: 'xmen', file: 'xmenData.js', label: 'X-Men • Timeline' },
+  { key: 'movies', file: 'moviesData.js', label: 'Marvel • All Movies' },
+  { key: 'series', file: 'seriesData.js', label: 'Marvel • All TV Shows' },
+  { key: 'animations', file: 'animationsData.js', label: 'Marvel • Animation' }
 ];
 
 export const PAGE_SIZE = 100;
@@ -18,9 +18,9 @@ const sourceBase = process.env.UPSTREAM_BASE ?? 'https://raw.githubusercontent.c
 
 export function decodeUpstreamModule(src) {
   const match = src.trim().match(/^export\s+default\s+(\[[\s\S]*\])\s*;?\s*$/);
-  if (!match) throw new Error('Format de la liste source inattendu : export default JSON array requis.');
+  if (!match) throw new Error('Unexpected source format: expected an exported JSON array.');
   const data = JSON.parse(match[1]);
-  if (!Array.isArray(data)) throw new Error('Liste source invalide.');
+  if (!Array.isArray(data)) throw new Error('Invalid source data: expected an array.');
   return data;
 }
 export function validPoster(src) {
@@ -55,7 +55,7 @@ export function normalize(items, cache = {}) {
 }
 async function getJson(url) {
   const res = await fetch(url, { signal: AbortSignal.timeout(30000), headers: { 'user-agent': 'marvel-addon-build/1.0' } });
-  if (!res.ok) throw new Error(`Source inaccessible : ${res.status} ${url}`);
+  if (!res.ok) throw new Error(`Source unavailable: ${res.status} ${url}`);
   return res.text();
 }
 export async function loadCatalogs({ fixture = false } = {}) {
@@ -69,7 +69,7 @@ export async function loadCatalogs({ fixture = false } = {}) {
   ]);
   const cache = JSON.parse(cacheText);
   const data = Object.fromEntries(SOURCES.map((s, i) => [s.key, decodeUpstreamModule(texts[i])]));
-  if (SOURCES.some(s => !data[s.key].length)) throw new Error('Un catalogue en amont est vide : compilation interrompue.');
+  if (SOURCES.some(s => !data[s.key].length)) throw new Error('An upstream catalog is empty: the build has been stopped.');
   return { data, cache, demo: false };
 }
 const writeJson = async (file, value) => {
@@ -81,16 +81,16 @@ export function selectCatalogs(normalized, mask) {
     return ['movie', 'series'].flatMap(type => {
       const metas = normalized[s.key].filter(x => x.type === type);
       if (!metas.length) return [];
-      return [{ type, id: `marvel-${s.key}-${type}`, name: `${s.label} • ${type === 'movie' ? 'Films' : 'Séries'}`, metas }];
+      return [{ type, id: `marvel-${s.key}-${type}`, name: `${s.label} • ${type === 'movie' ? 'Movies' : 'TV Shows'}`, metas }];
     });
   });
 }
 export function manifestFor(catalogs, mask) {
   return {
     id: `com.marvel.catalogs.stremio.${mask}`,
-    version: '1.0.0',
+    version: '1.0.1',
     name: 'Marvel Addon for Stremio',
-    description: 'Des catalogues Marvel personnalisables : MCU, X-Men, films, séries et animations. Sans flux vidéo.',
+    description: 'Customizable Marvel catalogs: MCU, X-Men, movies, TV shows, and animation. No video streams included.',
     resources: ['catalog'],
     types: ['movie', 'series'],
     catalogs: catalogs.map(({type, id, name}) => ({ type, id, name, extra: [{name: 'skip', isRequired: false}] })),
@@ -99,7 +99,7 @@ export function manifestFor(catalogs, mask) {
 }
 async function buildVariant(where, catalogs, mask) {
   const prefix = mask === 63 && where === outDir ? '../' : '../../../';
-  const redirect = `<!doctype html><html lang="fr"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${prefix}"><title>Configurer Marvel Addon for Stremio</title><p>Configuration sur <a href="${prefix}">Marvel Addon for Stremio</a>.</p></html>`;
+  const redirect = `<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=${prefix}"><title>Configure Marvel Addon for Stremio</title><p>Configure at <a href="${prefix}">Marvel Addon for Stremio</a>.</p></html>`;
   await mkdir(path.join(where, 'configure'), {recursive:true});
   await writeFile(path.join(where, 'configure', 'index.html'), redirect, 'utf8');
   await writeJson(path.join(where, 'manifest.json'), manifestFor(catalogs, mask));
@@ -114,7 +114,7 @@ async function buildVariant(where, catalogs, mask) {
 export async function build({ fixture = false } = {}) {
   const { data, cache, demo } = await loadCatalogs({ fixture });
   const normalized = Object.fromEntries(SOURCES.map(s => [s.key, normalize(data[s.key] ?? [], cache)]));
-  if (SOURCES.some(s => !normalized[s.key].length)) throw new Error('Catalogue sans identifiants IMDb valides.');
+  if (SOURCES.some(s => !normalized[s.key].length)) throw new Error('Catalog does not contain valid IMDb IDs.');
   await rm(outDir, {recursive: true, force: true});
   await mkdir(outDir, {recursive: true});
   await cp(path.join(projectDir, 'site'), outDir, { recursive: true });
@@ -129,12 +129,12 @@ export async function build({ fixture = false } = {}) {
     generatedAt: new Date().toISOString()
   });
   await writeFile(path.join(outDir, '.nojekyll'), '', 'utf8');
-  console.log(`Construction terminée : ${demo ? 'DÉMO locale' : 'catalogues complets'}, 63 configurations, ${SOURCES.length} collections.`);
+  console.log(`Build complete: ${demo ? 'LOCAL DEMO' : 'full catalogs'}, 63 configurations, ${SOURCES.length} collections.`);
   return {outDir, normalized, demo};
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   build({fixture: process.argv.includes('--fixture')}).catch(err => {
-    console.error(`Erreur de build : ${err.message}`);
+    console.error(`Build failed: ${err.message}`);
     process.exitCode = 1;
   });
 }
