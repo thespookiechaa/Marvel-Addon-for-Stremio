@@ -1,4 +1,4 @@
-name: Publier Marvel Addon for Stremio
+name: Deploy Marvel Addon for Stremio
 on:
   push:
     branches: [main]
@@ -21,20 +21,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Installer Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Vérifier le projet
+      - name: Run automated tests
         run: node --test
-      - name: Compiler les catalogues Marvel
+      - name: Build Marvel catalogs
         run: node scripts/build.mjs
-      - name: Configurer Pages
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Préparer les fichiers
+      - name: Upload generated site
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
-      - name: Déployer
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
