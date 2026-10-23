@@ -30,6 +30,13 @@ test('generates manifests and catalogs using demo data',async()=>{
   assert.equal((await read('p/1/manifest.json')).catalogs.length,2);
   assert.equal((await read('p/4/manifest.json')).catalogs.length,1);
   assert.equal((await read('p/63/manifest.json')).catalogs.length,manifest.catalogs.length);
+  const roadOnly=(await read('p/64/manifest.json'));
+  assert.deepEqual(roadOnly.catalogs.map(c=>c.type),['movie','series']);
+  assert.ok(roadOnly.catalogs.every(c=>c.name.startsWith('Road to Doomsday')));
+  const everything=(await read('p/127/manifest.json'));
+  assert.equal(everything.catalogs.length,manifest.catalogs.length+2);
+  assert.equal(everything.version,'1.1.0');
+  assert.equal(everything.stremioAddonsConfig.signature,manifest.stremioAddonsConfig.signature);
   const films=await read('catalog/movie/marvel-chronological-movie.json');
   const series=await read('catalog/series/marvel-chronological-series.json');
   assert.equal(films.metas[0].id,'tt0458339');
@@ -38,8 +45,19 @@ test('generates manifests and catalogs using demo data',async()=>{
   assert.equal((await read('catalog/movie/marvel-chronological-movie/skip=0.json')).metas.length,3);
   assert.equal((await read('catalog/movie/marvel-chronological-movie/skip=100.json')).metas.length,0);
   assert.equal((await read('timeline.json')).length,4);
+  const road=await read('road.json');
+  assert.equal(road.items.length,15);
+  assert.equal(road.items[0].id,'tt0120903');
+  assert.equal(road.items[1].id,'tt0290334');
+  assert.equal(road.items[6].id,'tt9140554');
+  assert.equal(road.items[6].watchNote,'Watch seasons 1 and 2');
+  assert.equal(road.items.at(-1).id,'tt10676052');
+  assert.equal(road.items.filter(item=>item.type==='series').length,1);
+  assert.deepEqual(road.releases,{fr:'2026-12-16',us:'2026-12-18'});
+  assert.equal((await read('p/64/catalog/movie/marvel-road-movie.json')).metas.length,14);
+  assert.equal((await read('p/64/catalog/series/marvel-road-series.json')).metas[0].description,'Watch seasons 1 and 2');
   assert.equal((await read('stats.json')).demo,true);
-  for(let mask=1;mask<=63;mask++){
+  for(let mask=1;mask<=127;mask++){
     assert.ok((await stat(path.join(root, 'dist', 'p', String(mask), 'manifest.json'))).isFile());
     assert.deepEqual((await read(`p/${mask}/manifest.json`)).stremioAddonsConfig, manifest.stremioAddonsConfig);
   }
