@@ -11,6 +11,8 @@ export const SOURCES = [
   { key: 'animations', file: 'animationsData.js', label: 'Marvel • Animation' }
 ];
 
+export const ROAD_SOURCE = { key: 'road', label: 'Road to Doomsday' };
+export const COLLECTIONS = [...SOURCES, ROAD_SOURCE];
 export const PAGE_SIZE = 100;
 const projectDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = path.join(projectDir, 'dist');
@@ -77,7 +79,7 @@ const writeJson = async (file, value) => {
   await writeFile(file, JSON.stringify(value), 'utf8');
 };
 export function selectCatalogs(normalized, mask) {
-  return SOURCES.filter((_, i) => mask & (1 << i)).flatMap(s => {
+  return COLLECTIONS.filter((_, i) => mask & (1 << i)).flatMap(s => {
     return ['movie', 'series'].flatMap(type => {
       const metas = normalized[s.key].filter(x => x.type === type);
       if (!metas.length) return [];
@@ -88,9 +90,9 @@ export function selectCatalogs(normalized, mask) {
 export function manifestFor(catalogs, mask) {
   return {
     id: `com.marvel.catalogs.stremio.${mask}`,
-    version: '1.0.1',
+    version: '1.1.0',
     name: 'Marvel Addon for Stremio',
-    description: 'Customizable Marvel catalogs: MCU, X-Men, movies, TV shows, and animation. No video streams included.',
+    description: 'Customizable Marvel catalogs and Road to Doomsday watch order. No video streams included.',
     resources: ['catalog'],
     types: ['movie', 'series'],
     catalogs: catalogs.map(({type, id, name}) => ({ type, id, name, extra: [{name: 'skip', isRequired: false}] })),
@@ -109,9 +111,13 @@ async function buildVariant(where, catalogs, mask) {
   await writeJson(path.join(where, 'manifest.json'), manifestFor(catalogs, mask));
   for (const { type, id, metas } of catalogs) {
     const parent = path.join(where, 'catalog', type);
-    await writeJson(path.join(parent, `${id}.json`), { metas: metas.slice(0, PAGE_SIZE) });
-    for (let skip = 0; skip <= Math.ceil(metas.length / PAGE_SIZE) * PAGE_SIZE; skip += PAGE_SIZE) {
-      await writeJson(path.join(parent, id, `skip=${skip}.json`), { metas: metas.slice(skip, skip + PAGE_SIZE) });
+    const safeMetas = metas.map(({ chapter, watchNote, position, ...meta }) => ({
+      ...meta,
+      ...(watchNote ? { description: [watchNote, meta.description].filter(Boolean).join(' — ') } : {})
+    }));
+    await writeJson(path.join(parent, `${id}.json`), { metas: safeMetas.slice(0, PAGE_SIZE) });
+    for (let skip = 0; skip <= Math.ceil(safeMetas.length / PAGE_SIZE) * PAGE_SIZE; skip += PAGE_SIZE) {
+      await writeJson(path.join(parent, id, `skip=${skip}.json`), { metas: safeMetas.slice(skip, skip + PAGE_SIZE) });
     }
   }
 }
@@ -119,21 +125,49 @@ export async function build({ fixture = false } = {}) {
   const { data, cache, demo } = await loadCatalogs({ fixture });
   const normalized = Object.fromEntries(SOURCES.map(s => [s.key, normalize(data[s.key] ?? [], cache)]));
   if (SOURCES.some(s => !normalized[s.key].length)) throw new Error('Catalog does not contain valid IMDb IDs.');
+  const road = JSON.parse(await readFile(path.join(projectDir, 'data', 'road-to-doomsday.json'), 'utf8'));
+  if (!Array.isArray(road.items) || road.items.length !== 15) throw new Error('Expected exactly 15 Road to Doomsday titles.');
+  const upstream = new Map(Object.values(normalized).flat().map(meta => [meta.id, meta]));
+  normalized.road = road.items.map((entry, position) => {
+    const reference = upstream.get(entry.id);
+    if (!/^tt\d{5,12}$/.test(entry.id) || !['movie', 'series'].includes(entry.type) || !entry.title) {
+      throw new Error('Invalid Road to Doomsday entry.');
+    }
+    if (reference && reference.type !== entry.type) throw new Error('Road to Doomsday title type mismatch: ' + entry.id);
+    return {
+      ...(reference || {}),
+      id: entry.id,
+      type: entry.type,
+      name: entry.title,
+      releaseInfo: entry.releaseYear,
+      chapter: entry.chapter,
+      ...(entry.watchNote ? { watchNote: entry.watchNote } : {}),
+      position
+    };
+  });
+  if (new Set(normalized.road.map(x => x.id)).size !== road.items.length) throw new Error('Duplicate Road to Doomsday entries.');
   await rm(outDir, {recursive: true, force: true});
   await mkdir(outDir, {recursive: true});
   await cp(path.join(projectDir, 'site'), outDir, { recursive: true });
   await buildVariant(outDir, selectCatalogs(normalized, 63), 63);
-  for (let mask = 1; mask <= 63; mask++) {
+  for (let mask = 1; mask <= 127; mask++) {
     await buildVariant(path.join(outDir, 'p', String(mask)), selectCatalogs(normalized, mask), mask);
   }
   await writeJson(path.join(outDir, 'timeline.json'), normalized.chronological);
+  await writeJson(path.join(outDir, 'road.json'), {
+    title: road.title,
+    editorialNote: road.editorialNote,
+    reference: road.reference,
+    releases: road.releases,
+    items: normalized.road
+  });
   await writeJson(path.join(outDir, 'stats.json'), {
     demo,
-    sources: SOURCES.map(s => ({ key: s.key, label: s.label, count: normalized[s.key].length })),
+    sources: COLLECTIONS.map(s => ({ key: s.key, label: s.label, count: normalized[s.key].length })),
     generatedAt: new Date().toISOString()
   });
   await writeFile(path.join(outDir, '.nojekyll'), '', 'utf8');
-  console.log(`Build complete: ${demo ? 'LOCAL DEMO' : 'full catalogs'}, 63 configurations, ${SOURCES.length} collections.`);
+  console.log(`Build complete: ${demo ? 'LOCAL DEMO' : 'full catalogs'}, 127 configurations, ${COLLECTIONS.length} collections.`);
   return {outDir, normalized, demo};
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
