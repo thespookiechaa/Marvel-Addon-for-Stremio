@@ -1,114 +1,117 @@
 {
   "title": "Road to Doomsday",
-  "editorialNote": "A fan-curated pre-Doomsday viewing guide, not an official Marvel Studios viewing order.",
+  "editorialNote": "A fan-curated viewing guide based on a community suggestion and a Konbini article, not an official Marvel Studios watch order. Listed in the editorial viewing order, not chronological or release order.",
+  "reference": "https://www.konbini.com/popculture/les-films-et-series-marvel-a-voir-ou-a-revoir-avant-de-decouvrir-avengers-doomsday/",
   "releases": {
     "fr": "2026-12-16",
     "us": "2026-12-18"
   },
   "items": [
     {
-      "id": "tt0371746",
-      "chapter": "The Avengers Saga"
+      "id": "tt0120903",
+      "title": "X-Men",
+      "type": "movie",
+      "releaseYear": "2000",
+      "chapter": "The X-Men Legacy"
+    },
+    {
+      "id": "tt0290334",
+      "title": "X2: X-Men United",
+      "type": "movie",
+      "releaseYear": "2003",
+      "chapter": "The X-Men Legacy"
     },
     {
       "id": "tt0458339",
+      "title": "Captain America: The First Avenger",
+      "type": "movie",
+      "releaseYear": "2011",
       "chapter": "The Avengers Saga"
     },
     {
       "id": "tt0848228",
-      "chapter": "The Avengers Saga"
-    },
-    {
-      "id": "tt1843866",
-      "chapter": "The Avengers Saga"
-    },
-    {
-      "id": "tt2395427",
-      "chapter": "The Avengers Saga"
-    },
-    {
-      "id": "tt3498820",
-      "chapter": "The Avengers Saga"
-    },
-    {
-      "id": "tt1211837",
-      "chapter": "The Avengers Saga"
-    },
-    {
-      "id": "tt3501632",
+      "title": "The Avengers",
+      "type": "movie",
+      "releaseYear": "2012",
       "chapter": "The Avengers Saga"
     },
     {
       "id": "tt4154756",
+      "title": "Avengers: Infinity War",
+      "type": "movie",
+      "releaseYear": "2018",
       "chapter": "The Avengers Saga"
     },
     {
       "id": "tt4154796",
+      "title": "Avengers: Endgame",
+      "type": "movie",
+      "releaseYear": "2019",
       "chapter": "The Avengers Saga"
     },
     {
-      "id": "tt9140560",
-      "chapter": "The Multiverse Opens"
-    },
-    {
       "id": "tt9140554",
-      "chapter": "The Multiverse Opens"
+      "title": "Loki",
+      "type": "series",
+      "releaseYear": "2021",
+      "chapter": "The Multiverse Saga",
+      "watchNote": "Watch seasons 1 and 2"
     },
     {
-      "id": "tt10168312",
-      "chapter": "The Multiverse Opens"
+      "id": "tt9376612",
+      "title": "Shang-Chi and the Legend of the Ten Rings",
+      "type": "movie",
+      "releaseYear": "2021",
+      "chapter": "The Multiverse Saga"
     },
     {
       "id": "tt10872600",
-      "chapter": "The Multiverse Opens"
+      "title": "Spider-Man: No Way Home",
+      "type": "movie",
+      "releaseYear": "2021",
+      "chapter": "The Multiverse Saga"
     },
     {
       "id": "tt9419884",
-      "chapter": "The Multiverse Opens"
-    },
-    {
-      "id": "tt10954600",
-      "chapter": "The Multiverse Opens"
-    },
-    {
-      "id": "tt0120903",
-      "chapter": "The Mutant Legacy"
-    },
-    {
-      "id": "tt0290334",
-      "chapter": "The Mutant Legacy"
-    },
-    {
-      "id": "tt1877832",
-      "chapter": "The Mutant Legacy"
-    },
-    {
-      "id": "tt6263850",
-      "chapter": "The Mutant Legacy"
-    },
-    {
-      "id": "tt9208876",
-      "chapter": "The Final Pieces"
+      "title": "Doctor Strange in the Multiverse of Madness",
+      "type": "movie",
+      "releaseYear": "2022",
+      "chapter": "The Multiverse Saga"
     },
     {
       "id": "tt9114286",
-      "chapter": "The Final Pieces"
-    },
-    {
-      "id": "tt15571732",
-      "chapter": "The Final Pieces"
+      "title": "Black Panther: Wakanda Forever",
+      "type": "movie",
+      "releaseYear": "2022",
+      "chapter": "The Multiverse Saga"
     },
     {
       "id": "tt14513804",
-      "chapter": "The Final Pieces"
+      "title": "Captain America: Brave New World",
+      "type": "movie",
+      "releaseYear": "2025",
+      "chapter": "The Road Ahead"
+    },
+    {
+      "id": "tt6263850",
+      "title": "Deadpool & Wolverine",
+      "type": "movie",
+      "releaseYear": "2024",
+      "chapter": "The Road Ahead"
     },
     {
       "id": "tt20969586",
-      "chapter": "The Final Pieces"
+      "title": "Thunderbolts*",
+      "type": "movie",
+      "releaseYear": "2025",
+      "chapter": "The Road Ahead"
     },
     {
       "id": "tt10676052",
-      "chapter": "The Final Pieces"
+      "title": "The Fantastic Four: First Steps",
+      "type": "movie",
+      "releaseYear": "2025",
+      "chapter": "The Road Ahead"
     }
   ]
 }
