@@ -56,6 +56,14 @@ test('generates manifests and catalogs using demo data',async()=>{
   assert.deepEqual(road.releases,{fr:'2026-12-16',us:'2026-12-18'});
   assert.equal((await read('p/64/catalog/movie/marvel-road-movie.json')).metas.length,14);
   assert.equal((await read('p/64/catalog/series/marvel-road-series.json')).metas[0].description,'Watch seasons 1 and 2');
+  const builtHtml=await readFile(path.join(root,'dist','index.html'),'utf8');
+  const doomCss=await readFile(path.join(root,'dist','road-doom.css'),'utf8');
+  assert.match(builtHtml, /road-doom\.css\?v=1\.1\.1/);
+  assert.match(builtHtml, /class="road-feature doom-theme"/);
+  assert.match(builtHtml, /class="toggle road-toggle"/);
+  assert.match(doomCss, /--doom-green:\s*#6fd39a/);
+  assert.match(doomCss, /prefers-reduced-motion:\s*reduce/);
+  assert.match(doomCss, /\.road-feature\.doom-theme/);
   assert.equal((await read('stats.json')).demo,true);
   for(let mask=1;mask<=127;mask++){
     assert.ok((await stat(path.join(root, 'dist', 'p', String(mask), 'manifest.json'))).isFile());
