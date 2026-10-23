@@ -94,7 +94,11 @@ export function manifestFor(catalogs, mask) {
     resources: ['catalog'],
     types: ['movie', 'series'],
     catalogs: catalogs.map(({type, id, name}) => ({ type, id, name, extra: [{name: 'skip', isRequired: false}] })),
-    behaviorHints: { configurable: true, configurationRequired: false }
+    behaviorHints: { configurable: true, configurationRequired: false },
+    stremioAddonsConfig: {
+      issuer: 'https://stremio-addons.net',
+      signature: 'eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..5pis_cbSsd0D1iMxK4ya2Q.ZJlNofggFLlXtV0Owl3wVK-v0Fu3Z8RXhNufpGX4s1PHTCdj_-a6ftGCirc1s189Jrzs7rvLmZQJZw5D8-x538YlubHLwGenFiZSvc_4uPLlb6mRA9gTcQ9Oytra1s9v.X-YAeK2di_Ei8sLwOGPA_A'
+    }
   };
 }
 async function buildVariant(where, catalogs, mask) {
