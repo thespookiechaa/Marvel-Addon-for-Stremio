@@ -1,0 +1,25 @@
+{
+  "chronological": [
+    {"title":"Captain America: The First Avenger","type":"movie","imdbId":"tt0458339","releaseYear":"2011","poster":"https://image.tmdb.org/t/p/w500/vSNxAJTlD0r02V9sPYpOjqDZXUK.jpg"},
+    {"title":"Marvel's Agent Carter","type":"series","imdbId":"tt3475734","releaseYear":"2015","poster":"https://image.tmdb.org/t/p/w500/fe79VYyLp5ZBstpJ4oukpuUT3B.jpg"},
+    {"title":"Captain Marvel","type":"movie","imdbId":"tt4154664","releaseYear":"2019","poster":"https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg"},
+    {"title":"Iron Man","type":"movie","imdbId":"tt0371746","releaseYear":"2008","poster":"https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"}
+  ],
+  "release": [
+    {"title":"Iron Man","type":"movie","imdbId":"tt0371746","releaseYear":"2008","poster":"https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"},
+    {"title":"The Incredible Hulk","type":"movie","imdbId":"tt0800080","releaseYear":"2008","poster":"https://image.tmdb.org/t/p/w500/gKzYx79y0AQTL4UAk1cBQJ3nvrm.jpg"}
+  ],
+  "xmen": [
+    {"title":"X-Men: First Class","type":"movie","imdbId":"tt1270798","releaseYear":"2011","poster":"https://image.tmdb.org/t/p/w500/hNEokmUke0dazoBhttFN0o3L7Xv.jpg"},
+    {"title":"X-Men: Days of Future Past","type":"movie","imdbId":"tt1877832","releaseYear":"2014","poster":"https://image.tmdb.org/t/p/w500/tYfijzolzgoMOtegh1Y7j2Enorg.jpg"}
+  ],
+  "movies": [
+    {"title":"The Avengers","type":"movie","imdbId":"tt0848228","releaseYear":"2012","poster":"https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg"}
+  ],
+  "series": [
+    {"title":"Daredevil","type":"series","imdbId":"tt3322312","releaseYear":"2015","poster":"https://image.tmdb.org/t/p/w500/QWbPaDxiB6LW2LjASknzYBvjMj.jpg"}
+  ],
+  "animations": [
+    {"title":"Spider-Man","type":"series","imdbId":"tt0061301","releaseYear":"1967","poster":"https://image.tmdb.org/t/p/original/y85QOYMhcZsEfHbrntBv5SZXH1w.jpg"}
+  ]
+}
