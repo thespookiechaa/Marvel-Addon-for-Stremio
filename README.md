@@ -1,4 +1,4 @@
-# Marvel Addon for Stremio (v1.0.1)
+# Marvel Addon for Stremio (v1.1.0)
 
 An unofficial, configurable **Marvel catalog addon for Stremio**, hosted as static files on GitHub Pages. No Deno server, API keys, npm dependencies, or video streams required.
 
@@ -10,13 +10,14 @@ The catalog data is based on [joaogonp/addon-marvel](https://github.com/joaogonp
 - MCU in release order
 - X-Men timeline
 - Marvel movies, TV shows, and animation
-- Interactive English configuration page: 6 toggles and 63 pre-generated combinations
+- Interactive English configuration page: 7 toggles and 127 pre-generated combinations
 - Stremio `movie` and `series` catalogs using IMDb identifiers, designed to work alongside your other Stremio addons
 - Pagination (100 titles per page; `skip=100` and other routes)
 - A web-based MCU watch-order guide showing movies and TV shows together
+- **Road to Doomsday:** a curated list of 15 movies and TV shows presented in one combined watch order on the website, a live countdown to the film's release (France: December 16, 2026; US: December 18, 2026), and an optional watched checklist saved locally in your browser
 - Automatic weekly updates through GitHub Actions
 
-**Note:** Stremio handles movies and TV shows as separate catalog types. The website displays the combined MCU timeline; Stremio presents separate movie and TV show rows. Ordering depends on the upstream data and may be incomplete or outdated. This addon does **not** provide streams, video files, subtitles, or links to watch copyrighted material.
+**Note:** Stremio handles movies and TV shows as separate catalog types. The website displays the combined MCU timeline and Road to Doomsday watch guide, but Stremio presents separate movie and TV show rows. Ordering depends on the upstream data and may be incomplete or outdated. This addon does **not** provide streams, video files, subtitles, or links to watch copyrighted material.
 
 ## Install in Stremio
 
@@ -25,9 +26,13 @@ The catalog data is based on [joaogonp/addon-marvel](https://github.com/joaogonp
 3. Select **Install in Stremio**, or copy the generated manifest URL.
 4. If needed, open **Stremio → Addons** and paste the URL into the addon installation field.
 
-All six collections: **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/manifest.json**
+Original six collections (unchanged for existing installs): **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/manifest.json**
 
-Each other combination gets its own manifest at `p/<selection>/manifest.json`. If you change your selection after installing, install the newly generated manifest as well.
+Road to Doomsday only (two Stremio catalog rows): **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/p/64/manifest.json**
+
+All seven collections: **https://thespookiechaa.github.io/Marvel-Addon-for-Stremio/p/127/manifest.json**
+
+Each other combination gets its own manifest at `p/<selection>/manifest.json`. The original six toggle bits are unchanged, and the new Road to Doomsday option uses bit 64. If you change your selection after installing, install the newly generated manifest as well.
 
 ## Local development on Windows
 
@@ -60,10 +65,14 @@ The workflow runs on every push to `main` and once a week. GitHub Pages must be 
 - `scripts/build.mjs` — fetches upstream data and generates static Stremio catalogs
 - `scripts/build.test.mjs` — automated tests
 - `scripts/serve.mjs` — local preview server
-- `site/index.html` — English configuration interface and MCU timeline
+- `site/index.html` — English configuration interface, unified watch guide, countdown and MCU timeline
+- `data/road-to-doomsday.json` — curated 15-title Road to Doomsday order; movie/series entries and release dates
+- `dist/road.json` — generated web watchlist (movies and TV shows mixed)
 - `.github/workflows/pages.yml` — GitHub Pages CI/CD workflow
 - `fixtures/catalogs.json` — sample data for local tests
 - `dist/` — generated output, not committed to Git
+
+Road to Doomsday is a fan-edited viewing selection, not an official Marvel Studios timeline, based on a community suggestion and [this Konbini article](https://www.konbini.com/popculture/les-films-et-series-marvel-a-voir-ou-a-revoir-avant-de-decouvrir-avengers-doomsday/). For **Loki**, the guide recommends seasons 1 and 2, while Stremio exposes the TV show as one entry. The progress checklist only tracks the visitor's browser and does not sync with Stremio.
 
 ## Limitations and acknowledgments
 
