@@ -31,7 +31,7 @@
 .road-feature.doom-theme::before {
   content: "";
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   inset: -90px -20% auto -15%;
   height: 470px;
@@ -47,7 +47,7 @@
 .road-feature.doom-theme::after {
   content: "";
   position: absolute;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   inset: 0;
   background:
@@ -55,6 +55,11 @@
     radial-gradient(circle at 99% 0%, transparent 0 80px, rgba(112, 163, 125, .11) 81px 82px, transparent 83px),
     repeating-linear-gradient(115deg, transparent 0 80px, rgba(196, 219, 202, .018) 81px, transparent 82px);
   border-radius: inherit;
+}
+
+.road-feature.doom-theme > * {
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes doom-mist {
